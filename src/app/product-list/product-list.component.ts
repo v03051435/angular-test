@@ -1,23 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../product.service';
+import { Product } from '../products';
 
-import { products } from '../products';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent {
-  products = products;
+export class ProductListComponent implements OnInit {
+  products: Product[] | undefined = [];
+
+  constructor(private productService: ProductService) {
+
+  }
+  async ngOnInit() {
+    this.products = await this.productService.getProducts();
+    console.log('load après');
+  }
 
   share() {
     window.alert('The product has been shared!');
   }
 }
-
-
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at https://angular.io/license
-*/
